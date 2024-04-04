@@ -14,6 +14,11 @@ export const addTask = (e) => {
     const date = calendar.value;
     const dateFormatted = moment(date).format("DD/MM/YYYY");
 
+    if (value === '' || date === '') {
+        alert('Ingrese una tarea válida o una fecha válida')
+        return;
+    };
+
     input.value = '';
     calendar.value = '';
 
@@ -47,7 +52,7 @@ export const createTask = ({ value, dateFormatted }) => {
 
     const dateElement = document.createElement('span');
     dateElement.innerHTML = dateFormatted;
-    
+
     task.appendChild(taskContent);
     task.appendChild(dateElement)
     task.appendChild(deleteIcon());
