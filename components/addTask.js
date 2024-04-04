@@ -15,16 +15,16 @@ export const addTask = (e) => {
     const dateFormatted = moment(date).format("DD/MM/YYYY");
     input.value = '';
     calendar.value = '';
-    
+
     /* JSON */
     const taskList = JSON.parse(localStorage.getItem('tasks')) || [];
     localStorage.setItem('tasks', JSON.stringify(taskList));
-    
+
     const taskObj = {
         value,
         dateFormatted
     }
-    
+
     taskList.push(taskObj);
 
     const task = createTask(taskObj)
@@ -33,24 +33,24 @@ export const addTask = (e) => {
 
 
 
-const createTask = ({value, dateFormatted}) => {
+const createTask = ({ value, dateFormatted }) => {
     const task = document.createElement('li');
-    task.classList.add('card');
+        task.classList.add('card');
+
     const taskContent = document.createElement('div');
-   
+
 
 
     const titleTask = document.createElement('span');
-    titleTask.classList.add('task');
-    titleTask.innerText = value;
-    taskContent.appendChild(checkComplete());
-    taskContent.appendChild(titleTask);
-    // task.innerHTML = content;
+        titleTask.classList.add('task');
+        titleTask.innerText = value;
+        taskContent.appendChild(checkComplete());
+        taskContent.appendChild(titleTask);
+        
     const dateElement = document.createElement('span')
-    dateElement.innerHTML = dateFormatted
-
-    task.appendChild(taskContent);
-    task.appendChild(dateElement)
-    task.appendChild(deleteIcon());
+        dateElement.innerHTML = dateFormatted
+        task.appendChild(taskContent);
+        task.appendChild(dateElement)
+        task.appendChild(deleteIcon());
     return task;
 };
