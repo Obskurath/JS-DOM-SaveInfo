@@ -23,9 +23,13 @@ export const addTask = (e) => {
     input.value = '';
     calendar.value = '';
 
+    const complete = false;
+
     const taskObj = {
         value,
-        dateFormatted
+        dateFormatted,
+        complete,
+        id: uuid.v4()
     };
 
     list.innerHTML = '';
@@ -41,23 +45,31 @@ export const addTask = (e) => {
 
 
 
-export const createTask = ({ value, dateFormatted }) => {
+export const createTask = ({ value, dateFormatted, complete, id }) => {
     const task = document.createElement('li');
     task.classList.add('card');
 
     const taskContent = document.createElement('div');
 
+    const check = checkComplete(id);
+
+    if (complete) {
+        check.classList.toggle('fas');
+        check.classList.toggle('completeIcon');
+        check.classList.toggle('far');
+    }
+
     const titleTask = document.createElement('span');
     titleTask.classList.add('task');
     titleTask.innerText = value;
-    taskContent.appendChild(checkComplete());
+    taskContent.appendChild(check);
     taskContent.appendChild(titleTask);
 
     const dateElement = document.createElement('span');
     dateElement.innerHTML = dateFormatted;
 
     task.appendChild(taskContent);
-    task.appendChild(dateElement)
-    task.appendChild(deleteIcon());
+    task.appendChild(dateElement);
+    task.appendChild(deleteIcon(id));
     return task;
 };
