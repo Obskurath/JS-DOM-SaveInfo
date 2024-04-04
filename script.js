@@ -5,6 +5,10 @@ const btn = document.querySelector('[data-form-btn]');
 
 const createTask = (evento) => {
   evento.preventDefault();
+  const calendar =  document.querySelector("[data-form-date]");
+  const date = calendar.value;
+  console.log(date);
+  
   const input = document.querySelector('[data-form-input]');
   const value = input.value;
   const list = document.querySelector('[data-list]');
