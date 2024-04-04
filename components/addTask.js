@@ -2,37 +2,43 @@ import checkComplete from './checkComplete.js';
 import deleteIcon from './deleteIcon.js';
 
 export const addTask = (e) => {
+    e.preventDefault();
+
+    /* Query Selectors */
     const list = document.querySelector('[data-list]');
-    const task = createTask(e)
+    const input = document.querySelector('[data-form-input]');
+    const calendar = document.querySelector("[data-form-date]");
+
+    /* Values */
+    const value = input.value;
+    const date = calendar.value;
+    const dateFormatted = moment(date).format("DD/MM/YYYY");
+    input.value = '';
+    calendar.value = '';
+    
+    /* JSON */
+    const taskList = JSON.parse(localStorage.getItem('tasks')) || [];
+    localStorage.setItem('tasks', JSON.stringify(taskList));
+    
+    const taskObj = {
+        value,
+        dateFormatted
+    }
+    
+    taskList.push(taskObj);
+
+    const task = createTask(taskObj)
     list.appendChild(task);
 }
 
 
 
-const createTask = (evento) => {
-    evento.preventDefault();
-    const taskList = JSON.parse(localStorage.getItem('tasks')) || [];
-    console.log(taskList)
-    const calendar = document.querySelector("[data-form-date]");
-    const date = calendar.value;
-    const dateFormatted = moment(date).format("DD/MM/YYYY");
-    console.log(dateFormatted);
-
-    const input = document.querySelector('[data-form-input]');
-    const value = input.value;
+const createTask = ({value, dateFormatted}) => {
     const task = document.createElement('li');
     task.classList.add('card');
-    input.value = '';
-    //backticks
     const taskContent = document.createElement('div');
-    const taskObj = {
-        value,
-        dateFormatted
-    }
+   
 
-    taskList.push(taskObj);
-
-    localStorage.setItem('tasks', JSON.stringify(taskList));
 
     const titleTask = document.createElement('span');
     titleTask.classList.add('task');
